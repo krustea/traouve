@@ -90,4 +90,10 @@ class CategoryController extends AbstractController
 
         return $this->redirectToRoute('category_index');
     }
+
+    public function dropDown()
+    {
+        $categories= $this->getDoctrine()->getRepository(Category::class)->findAll();
+        return $this->render('category/dropdown.html.twig',['categories'=>$categories]);
+    }
 }

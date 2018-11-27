@@ -8,10 +8,14 @@ use Doctrine\ORM\Mapping as ORM;
  * State
  *
  * @ORM\Table(name="state")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\StateRepository")
  */
 class State
 {
+    const LOST='perdu';
+    const FIND='trouve';
+    const RENDU='rendu';
+
     /**
      * @var int
      *

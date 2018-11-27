@@ -90,4 +90,10 @@ class CountyController extends AbstractController
 
         return $this->redirectToRoute('county_index');
     }
+
+    public function countyList()
+    {
+        $counties= $this->getDoctrine()->getRepository(County::class)->findAll();
+        return $this->render('county/countylist.html.twig',['counties'=>$counties]);
+    }
 }

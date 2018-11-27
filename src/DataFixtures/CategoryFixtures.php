@@ -28,7 +28,7 @@ class CategoryFixtures extends Fixture
         $jouet = new Category();
         $jouet->setLabel('Jouets');
         $jouet->setColor('green');
-        $jouet->setIcon('fa-chest');
+        $jouet->setIcon('fa-bullseye');
         $manager->persist($jouet);
         $this->addReference('category-3', $jouet);
 

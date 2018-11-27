@@ -15,7 +15,7 @@ class TraobjectFixtures extends Fixture implements DependentFixtureInterface
         $cle = new Traobject();
         $cle->setTitle("perdu clé");
         $cle->setDescription('perdu cle a rennes dans la rue de Nemours');
-        $cle->setPicture('cle-1.jpg');
+        $cle->setPicture('keys.jpg');
         $cle->setEventAt(new \DateTime('2018-12-10'));
         $cle->setCity('Rennes');
         $cle->setCreatedAt(new \DateTime('2018-12-11'));
@@ -29,7 +29,7 @@ class TraobjectFixtures extends Fixture implements DependentFixtureInterface
         $portefeuille = new Traobject();
         $portefeuille->setTitle("trouvé portefeuille");
         $portefeuille->setDescription('trouvé portefeuille centre ville Saint Brieuc');
-        $portefeuille->setPicture('portefeuille-1.jpg');
+        $portefeuille->setPicture('wallet.jpg');
         $portefeuille->setEventAt(new \DateTime('2018-11-05'));
         $portefeuille->setCity('Saint Brieuc');
         $portefeuille->setCreatedAt(new \DateTime('2018-11-06'));
@@ -43,7 +43,7 @@ class TraobjectFixtures extends Fixture implements DependentFixtureInterface
         $jouet = new Traobject();
         $jouet->setTitle("trouve peluche");
         $jouet->setDescription('trouve peluche a vannes');
-        $jouet->setPicture('jouet-1.jpg');
+        $jouet->setPicture('teddy-bear.jpg');
         $jouet->setEventAt(new \DateTime('2018-09-10'));
         $jouet->setCity('Vannes');
         $jouet->setCreatedAt(new \DateTime('2018-09-11'));
