@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Traobject;
 use App\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +55,10 @@ class CategoryController extends AbstractController
      */
     public function show(Category $category): Response
     {
-        return $this->render('category/show.html.twig', ['category' => $category]);
+        $traobjects = $this->getDoctrine()->getRepository(Traobject::class)->findBy(["category" => $category]);
+
+        return $this->render('category/show.html.twig', ['category' => $category, 'traobjects' => $traobjects]);
+
     }
 
     /**

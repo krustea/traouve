@@ -20,8 +20,13 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
-                        <img src="uploads/wallet.jpg" class="img-thumbnail" alt="Portefeuille">
-                    </div>
+                        {% if traobject.picture %}
+                            <img class="card-img-top" src="{{ asset('uploads/' ~ traobject.picture) }}" alt=" {{ traobject.category.label }}">
+                        {% else %}
+                            <div class="card-logo-top" style="background-color: {{ traobject.category.color }};">
+                                <i class="fa {{ traobject.category.icon }}"></i>
+                            </div>
+                        {% endif %}                    </div>
                     <div class="col-md-8">
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci architecto cum ducimus eaque eligendi et laudantium nostrum porro possimus, provident quam quibusdam recusandae rem similique unde? Laboriosam officiis suscipit vero.</p>
                     </div>
@@ -29,9 +34,9 @@
             </div>
             <footer class="card-footer">
                 <ul class="object-features">
-                    <li><a href="#" class="badge" style="background-color: #dc143c;"><i class="fa fa-money"></i> Portefeuille</a></li>
-                    <li><a href="#" class="badge badge-info"><i class="fa fa-calendar"></i> 21/11/2018</a></li>
-                    <li><a href="#" class="badge badge-info"><i class="fa fa-map-marker"></i> Rennes</a></li>
+                    <li><a href="#" class="badge" style="background-color: {{ traobject.category.color }};"><i class="fa {{ traobject.category.icon }}"></i> {{ traobject.category.label }}</a></li>
+                    <li><a href="#" class="badge badge-info"><i class="fa fa-calendar"></i> {{ traobject.eventAt|date('d/m/Y') }}</a></li>
+                    <li><a href="#" class="badge badge-info"><i class="fa fa-map-marker"></i> {{ traobject.city }}</a></li>
                 </ul>
             </footer>
         </div>
@@ -40,29 +45,32 @@
 
         <h3>Commentaires</h3>
 
-        <div class="alert alert-secondary" role="alert">
-            <p>Veuillez vous connecter afin de pouvoir laisser un commentaire</p>
-            <a href="login.html" class="btn btn-primary">
-                <i class="fa fa-sign-in"></i>
-                Me connecter
+        {% if app.user %}
+            <span class="btn btn-outline-primary">{{ app.user.email }}</span>
+        {% else %}
+            <a class="btn btn-outline-primary" href="{{ path('app_login') }}">Se connecter</a>
+            <a class="btn btn-outline-primary" href="{{ path('user_registration') }}">
+                <i class="fa fa-user-plus"></i>
+                Créer un compte
             </a>
-        </div>
+
+        {% endif %}
+
+
+
+
 
         <ul class="list-unstyled">
-            <li class="media mb-1">
-                <img class="mr-3" src="uploads/user-2.jpg" alt="Generic placeholder image">
-                <div class="media-body">
-                    <h5 class="mt-0 mb-1">Jane Doe</h5>
-                    <p>Pourriez-vous préciser l'heure à laquelle vous l'avez perdu svp ? Il me semble avoir vu une personne le ramasser vers 17h30.</p>
-                </div>
-            </li>
-            <li class="media mb-1">
-                <img class="mr-3" src="uploads/user-1.jpg" alt="John Doe">
-                <div class="media-body">
-                    <h5 class="mt-0 mb-1">John Doe</h5>
-                    <p>Bonjour, je pense avoir trouvé votre portefeuille ce matin. Pourriez-vous m'envoyer votre nom et prénom par message privé svp afin que je puisse vous le remettre ?</p>
-                </div>
-            </li>
+            {% for comment in comments  %}
+                <li class="media mb-1">
+                    <img class="mr-3" src="{{ traobject.user.picture }}" alt="{{ traobject.user.lastname }}">
+                    <div class="media-body">
+                        <h5 class="mt-0 mb-1">{{ traobject.user }}</h5>
+                        <p>{{ comment.content }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+
         </ul>
     </div>
 

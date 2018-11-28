@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\County;
+use App\Entity\Traobject;
 use App\Form\CountyType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,8 +55,11 @@ class CountyController extends AbstractController
      */
     public function show(County $county): Response
     {
-        return $this->render('county/show.html.twig', ['county' => $county]);
+        $traobjects = $this->getDoctrine()->getRepository(Traobject::class)->findBy(["county"=>$county]);
+        return $this->render('county/show.html.twig', ['county' => $county, 'traobjects' => $traobjects]);
     }
+
+
 
     /**
      * @Route("/{id}/edit", name="county_edit", methods="GET|POST")

@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
+use App\Entity\State;
 use App\Entity\Traobject;
 use App\Form\TraobjectType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,6 +26,32 @@ class TraobjectController extends AbstractController
             ->findAll();
 
         return $this->render('traobject/index.html.twig', ['traobjects' => $traobjects]);
+    }
+
+    /**
+     * @Route("/trouve", name="traobject_trouve", methods="GET")
+     */
+    public function trouve()
+    {
+        $find= $this->getDoctrine()->getRepository(State::class)->findOneBy(['label'=>State::FIND]);
+        $traobjects = $this->getDoctrine()->getRepository(Traobject::class)->findByState($find);
+
+            return $this->render("traobject/list.html.twig", [
+                "traobjects" => $traobjects
+            ]);
+    }
+
+    /**
+     * @Route("/perdu", name="traobject_perdu", methods="GET")
+     */
+    public function perdu()
+    {
+        $lost= $this->getDoctrine()->getRepository(State::class)->findOneBy(['label'=>State::LOST]);
+        $traobjects = $this->getDoctrine()->getRepository(Traobject::class)->findByState($lost);
+
+            return $this->render("traobject/list.html.twig", [
+                "traobjects" => $traobjects
+            ]);
     }
 
     /**
@@ -54,7 +82,9 @@ class TraobjectController extends AbstractController
      */
     public function show(Traobject $traobject): Response
     {
-        return $this->render('traobject/show.html.twig', ['traobject' => $traobject]);
+        $comments= $this->getDoctrine()->getRepository(Comment::class)->findBy(['traobject'=>$traobject]);
+
+        return $this->render('traobject/show.html.twig', ['traobject' => $traobject, 'comments'=>$comments]);
     }
 
     /**

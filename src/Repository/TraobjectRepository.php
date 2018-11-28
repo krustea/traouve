@@ -20,7 +20,7 @@ class TraobjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Traobject::class);
     }
 
-    public function findByState(State $state ,Int $limit)
+    public function findByState(State $state, int $limit = null)
     {
         $qb = $this->createQueryBuilder('t');
         $qb->innerJoin('t.state','s')
@@ -28,9 +28,12 @@ class TraobjectRepository extends ServiceEntityRepository
             ->where($qb->expr()->eq('s.id', ':state'))
                 ->orderBy('t.createdAt', 'DESC');
 
+        if ($limit) {
+            $qb->setMaxResults($limit);
+        }
+
 
         return $qb->setParameter(':state', $state->getId())
-            ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
     }

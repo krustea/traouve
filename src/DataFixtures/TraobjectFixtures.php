@@ -53,6 +53,17 @@ class TraobjectFixtures extends Fixture implements DependentFixtureInterface
         $jouet->setUser($this->getReference('user-3'));
         $manager->persist($jouet);
 
+        $ipad = new Traobject();
+        $ipad->setTitle("Perdu Ipad");
+        $ipad->setDescription('Perdu Ipad centre ville Saint Brieuc');
+        $ipad->setEventAt(new \DateTime('2018-11-15'));
+        $ipad->setCity('Saint Brieuc');
+        $ipad->setCreatedAt(new \DateTime('2018-11-18'));
+        $ipad->setCategory($this->getReference('category-2'));
+        $ipad->setCounty($this->getReference('county-2'));
+        $ipad->setState($this->getReference('state-1'));
+        $ipad->setUser($this->getReference('user-2'));
+        $manager->persist($ipad);
 
         $manager->flush();
     }
