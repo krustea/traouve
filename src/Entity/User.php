@@ -5,12 +5,16 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * User
  *
  * @ORM\Table(name="user", uniqueConstraints={@ORM\UniqueConstraint(name="email_UNIQUE", columns={"email"})})
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ *
+ * @Vich\Uploadable
  */
 class User implements UserInterface
 {
@@ -90,10 +94,19 @@ class User implements UserInterface
 
     /**
      * @var string|null
-     *
      * @ORM\Column(name="picture", type="string", length=255, nullable=true)
      */
     private $picture;
+
+
+    /**
+     * @Vich\UploadableField(mapping="traobject_image", fileNameProperty="picture")
+     * @var File
+     */
+    private $pictureFile;
+
+
+
 
     public function getId(): ?int
     {
@@ -160,17 +173,47 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getPicture(): ?string
     {
         return $this->picture;
     }
 
-    public function setPicture(?string $picture): self
+    /**
+     * @param null|string $picture
+     * @return User
+     */
+    public function setPicture(?string $picture): User
     {
         $this->picture = $picture;
 
         return $this;
     }
+
+    /**
+     * @return null|File
+     */
+    public function getPictureFile(): ?File
+    {
+        return $this->pictureFile;
+    }
+
+    /**
+     * @param File $pictureFile
+     */
+    public function setPictureFile(File $pictureFile=null)
+    {
+        $this->pictureFile = $pictureFile;
+
+
+        if ($pictureFile) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
 
 
     /**

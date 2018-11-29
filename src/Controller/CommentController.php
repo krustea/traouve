@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Traobject;
 use App\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,12 +28,18 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="comment_new", methods="GET|POST")
+     * @Route("/new/{id}", name="comment_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Traobject $traobject, Request $request): Response
     {
         $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
+        $comment->setUser($this->getUser());
+        $comment->setTraobject($traobject);
+
+        $form = $this->createForm(CommentType::class, $comment, [
+            'action' => $this->generateUrl('comment_new', ['id' => $traobject->getId()])
+        ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -40,7 +47,7 @@ class CommentController extends AbstractController
             $em->persist($comment);
             $em->flush();
 
-            return $this->redirectToRoute('comment_index');
+            return $this->redirectToRoute('traobject_show', ['id' => $traobject->getId()]);
         }
 
         return $this->render('comment/new.html.twig', [

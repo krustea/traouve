@@ -65,10 +65,13 @@ class TraobjectController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $traobject->setUser($this->getUser());
+
             $em->persist($traobject);
             $em->flush();
 
-            return $this->redirectToRoute('traobject_index');
+            return $this->redirectToRoute('homepage');
         }
 
         return $this->render('traobject/new.html.twig', [

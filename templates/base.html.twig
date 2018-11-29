@@ -33,6 +33,9 @@
                         <i class="fa fa-user-plus"></i>
                         Créer un compte
                     </a>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('admin') }}" class="btn btn-light">Administration</a>
 
             {% endif %}
 

@@ -3,9 +3,11 @@
 {% block title %}New Traobject{% endblock %}
 
 {% block body %}
-    <h1>Deposer une annonce</h1>
 
-    {{ include('traobject/_form.html.twig') }}
+    <div class="container col-md-6">
+        <h1>Deposer une annonce</h1>
+        {{ include('traobject/_form.html.twig') }}
 
-    <a href="{{ path('traobject_index') }}">back to list</a>
+    </div>
+
 {% endblock %}

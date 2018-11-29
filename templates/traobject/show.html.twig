@@ -13,7 +13,7 @@
             <h1 class="card-header">
                 <span class="badge badge-primary badge-found">
                     <i class="fa fa-map-pin"></i>
-                    Trouvé
+                    {{ traobject.state.label }}
                 </span>
                 {{ traobject.title }}
             </h1>
@@ -44,9 +44,20 @@
         <hr>
 
         <h3>Commentaires</h3>
-
+        <ul class="list-unstyled">
+            {% for comment in comments  %}
+                <li class="media mb-1">
+                    <img class="mr-3" src="{{ asset('uploads/' ~ traobject.user.picture) }}" alt="{{ traobject.user.lastname }}">
+                    <div class="media-body">
+                        <h5 class="mt-0 mb-1">{{ traobject.user }}</h5>
+                        <p>{{ comment.content }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
         {% if app.user %}
             <span class="btn btn-outline-primary">{{ app.user.email }}</span>
+            {{ render(controller('App\\Controller\\CommentController:new', {'id': traobject.id}))}}
         {% else %}
             <a class="btn btn-outline-primary" href="{{ path('app_login') }}">Se connecter</a>
             <a class="btn btn-outline-primary" href="{{ path('user_registration') }}">
@@ -55,23 +66,6 @@
             </a>
 
         {% endif %}
-
-
-
-
-
-        <ul class="list-unstyled">
-            {% for comment in comments  %}
-                <li class="media mb-1">
-                    <img class="mr-3" src="{{ traobject.user.picture }}" alt="{{ traobject.user.lastname }}">
-                    <div class="media-body">
-                        <h5 class="mt-0 mb-1">{{ traobject.user }}</h5>
-                        <p>{{ comment.content }}</p>
-                    </div>
-                </li>
-            {% endfor %}
-
-        </ul>
     </div>
 
 </main>

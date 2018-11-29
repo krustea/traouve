@@ -16,14 +16,11 @@ class DefaultController extends BaseController
     public function homepage()
     {   $lost= $this->getDoctrine()->getRepository(State::class)->findOneBy(['label'=>State::LOST]);
         $find= $this->getDoctrine()->getRepository(State::class)->findOneBy(['label'=>State::FIND]);
-        $rendu= $this->getDoctrine()->getRepository(State::class)->findOneBy(['label'=>State::RENDU]);
         $traobjectlosts = $this->getDoctrine()->getRepository(Traobject::class)->findByState($lost,4);
         $traobjectfinds = $this->getDoctrine()->getRepository(Traobject::class)->findByState($find,4);
-        $traobjectrendus = $this->getDoctrine()->getRepository(Traobject::class)->findByState($rendu,4);
         return $this->render('default/homepage.html.twig',[
             "traobjectlosts"=> $traobjectlosts,
             "traobjectfinds"=> $traobjectfinds,
-            "traobjectrendus"=> $traobjectrendus,
         ]);    }
 
 }

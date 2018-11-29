@@ -6,6 +6,8 @@ use App\Entity\Traobject;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Faker\Factory;
+
 
 class TraobjectFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -49,7 +51,7 @@ class TraobjectFixtures extends Fixture implements DependentFixtureInterface
         $jouet->setCreatedAt(new \DateTime('2018-09-11'));
         $jouet->setCategory($this->getReference('category-3'));
         $jouet->setCounty($this->getReference('county-4'));
-        $jouet->setState($this->getReference('state-3'));
+        $jouet->setState($this->getReference('state-2'));
         $jouet->setUser($this->getReference('user-3'));
         $manager->persist($jouet);
 

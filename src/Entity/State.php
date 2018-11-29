@@ -14,7 +14,6 @@ class State
 {
     const LOST='perdu';
     const FIND='trouve';
-    const RENDU='rendu';
 
     /**
      * @var int

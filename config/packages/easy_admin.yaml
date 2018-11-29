@@ -1,11 +1,73 @@
 easy_admin:
+    site_name: '<img src="https://pbs.twimg.com/profile_images/1002230918810165248/OxJPrf2v_400x400.jpg" /> Krst Corporation'
     entities:
-        # List the entity class name you want to manage
-        - App\Entity\Comment
-        - App\Entity\Category
-        - App\Entity\User
-        - App\Entity\Traobject
-        - App\Entity\State
-        - App\Entity\County
-        - App\Entity\Message
+        Category:
+            class: App\Entity\Category
+            new:
+                title: 'Add New Category'
+            edit:
+                title: 'Edit Category'
+        Comment:
+            class: App\Entity\Comment
+            new:
+                title: 'Add New Comment'
+            edit:
+                title: 'Edit Comment'
+        County:
+            class: App\Entity\County
+            new:
+                title: 'Add New County'
+            edit:
+                title: 'Edit County'
+        State:
+            class: App\Entity\State
+            new:
+                title: 'Add New State'
+            edit:
+                title: 'Edit State'
+        Traobject:
+            class: App\Entity\Traobject
+            list:
+                fields:
+                - { property: 'id', type: 'int' }
+                - { property: 'title', type: 'text' }
+                - { property: 'picture', type: 'image', base_path: '%app.path.uploads_dir%' }
+                - { property: 'event_at', type: 'datetime' }
+                - { property: 'city', type: 'text' }
 
+            show:
+                fields:
+                - { property: 'title', type: 'text' }
+                - { property: 'picture', type: 'image', base_path: '%app.path.uploads_dir%' }
+                - { property: 'event_at', type: 'datetime' }
+                - { property: 'city', type: 'text' }
+            form:
+                fields:
+                - { property: 'pictureFile', type: 'vich_image' }
+
+            new:
+                title: 'Add New Traobject'
+            edit:
+                title: 'Edit Traobject'
+        User:
+            class: App\Entity\User
+            list:
+                fields:
+                - { property: 'id', type: 'int' }
+                - { property: 'firstname', type: 'text' }
+                - { property: 'lastname', type: 'text' }
+                - { property: 'email', type: 'text' }
+                - { property: 'phone', type: 'text' }
+                - { property: 'picture', type: 'image', base_path: '%app.path.uploads_dir%' }
+
+                title: 'Add New User'
+            edit:
+                title: 'Edit User'
+    design:
+        assets:
+            favicon: 'assets/images/favicon.png'
+            css:
+            - 'bundles/easyadmin/bootstrap-all.css'
+            js:
+            - 'bundles/easyadmin/bootstrap-all.js'
+        brand_color : '#000d1a'

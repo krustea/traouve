@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Traobject
  *
  * @ORM\Table(name="traobject", indexes={@ORM\Index(name="fk_traobject_category_idx", columns={"category_id"}), @ORM\Index(name="fk_traobject_state1_idx", columns={"state_id"}), @ORM\Index(name="fk_traobject_user1_idx", columns={"user_id"}), @ORM\Index(name="fk_traobject_county1_idx", columns={"county_id"})})
  * @ORM\Entity(repositoryClass="App\Repository\TraobjectRepository")
+ * @ORM\HasLifecycleCallbacks()
+ * @Vich\Uploadable
  */
 class Traobject
 {
@@ -30,13 +34,18 @@ class Traobject
 
     /**
      * @var string|null
-     *
      * @ORM\Column(name="picture", type="string", length=255, nullable=true)
      */
     private $picture;
 
     /**
-     * @var string|null
+     * @Vich\UploadableField(mapping="traobject_image", fileNameProperty="picture")
+     * @var File
+     */
+    private $pictureFile;
+
+    /**
+     * @var string
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=true)
      */
@@ -84,8 +93,10 @@ class Traobject
      */
     private $updatedAt;
 
+
+
     /**
-     * @var \Category
+     * @var Category
      *
      * @ORM\ManyToOne(targetEntity="Category")
      * @ORM\JoinColumns({
@@ -95,7 +106,7 @@ class Traobject
     private $category;
 
     /**
-     * @var \County
+     * @var County
      *
      * @ORM\ManyToOne(targetEntity="County")
      * @ORM\JoinColumns({
@@ -105,7 +116,7 @@ class Traobject
     private $county;
 
     /**
-     * @var \State
+     * @var State
      *
      * @ORM\ManyToOne(targetEntity="State")
      * @ORM\JoinColumns({
@@ -115,7 +126,7 @@ class Traobject
     private $state;
 
     /**
-     * @var \User
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
@@ -141,16 +152,46 @@ class Traobject
         return $this;
     }
 
+
+    /**
+     * @return null|string
+     */
     public function getPicture(): ?string
     {
         return $this->picture;
     }
 
-    public function setPicture(?string $picture): self
+
+    /**
+     * @param null|string $picture
+     * @return Traobject
+     */
+    public function setPicture(?string $picture): Traobject
     {
         $this->picture = $picture;
 
         return $this;
+    }
+
+    /**
+     * @return null|File
+     */
+    public function getPictureFile(): ?File
+    {
+        return $this->pictureFile;
+    }
+
+    /**
+     * @param File $pictureFile
+     */
+    public function setPictureFile(File $picture = null)
+    {
+        $this->pictureFile = $picture;
+
+        if ($picture) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
     }
 
     public function getDescription(): ?string
@@ -283,6 +324,22 @@ class Traobject
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->setUpdatedAt(new \DateTime());
     }
 
     public function __toString()

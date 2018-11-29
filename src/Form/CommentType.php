@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,10 +13,10 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content')
-            ->add('createdAt')
-            ->add('traobject')
-            ->add('user')
+            ->add('content',null ,array('label'=>'Commentaire'))
+            //->add('createdAt', DateType::class )
+            //->add('traobject')
+            //->add('user')
         ;
     }
 
