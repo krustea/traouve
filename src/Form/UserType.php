@@ -20,7 +20,7 @@ class UserType extends AbstractType
             ->add('firstname',TextType::class, array('label'=>'Prenom'))
             ->add('lastname',TextType::class, array('label'=>'Nom'))
             ->add('email',TextType::class)
-            ->add('pictureFile', VichImageType::class, array('label'=>'Image'))
+            ->add('pictureFile', VichImageType::class, array('label'=>'Image', 'required'=> false))
             ->add('plainPassword', RepeatedType::class,[
                 'type'=>PasswordType::class,
                 'first_options'=> ['label'=> ' mot de passe'],

@@ -41,9 +41,8 @@ easy_admin:
                 - { property: 'picture', type: 'image', base_path: '%app.path.uploads_dir%' }
                 - { property: 'event_at', type: 'datetime' }
                 - { property: 'city', type: 'text' }
-            form:
-                fields:
                 - { property: 'pictureFile', type: 'vich_image' }
+
 
             new:
                 title: 'Add New Traobject'
