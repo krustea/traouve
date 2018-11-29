@@ -47,9 +47,9 @@
         <ul class="list-unstyled">
             {% for comment in comments  %}
                 <li class="media mb-1">
-                    <img class="mr-3" src="{{ asset('uploads/' ~ traobject.user.picture) }}" alt="{{ traobject.user.lastname }}">
+                    <img class="mr-3" src="{{ asset('uploads/' ~ comment.user.picture) }}" alt="{{ comment.user.lastname }}">
                     <div class="media-body">
-                        <h5 class="mt-0 mb-1">{{ traobject.user }}</h5>
+                        <h5 class="mt-0 mb-1">{{ comment.user }}</h5>
                         <p>{{ comment.content }}</p>
                     </div>
                 </li>

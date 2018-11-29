@@ -25,6 +25,7 @@
             <a class="p-2 text-dark" href="{{ path('traobject_perdu') }}">Objets perdus</a>
             <a class="p-2 text-dark" href="{{ path('traobject_trouve') }}">Objets trouvés</a>
             {% if app.user %}
+                <a class="p-2 text-dark" href="{{ path('user_show', {'id': app.user.id}) }}">profil</a>
                 <span class="btn btn-outline-primary">{{ app.user.email }}</span>
                 <a class="btn btn-outline-primary" href="{{ path('app_logout') }}">Se deconnecter</a>
                 {% else %}

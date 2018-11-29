@@ -81,6 +81,63 @@ class TraobjectController extends AbstractController
     }
 
     /**
+     * @Route("/newlost", name="traobject_newlost", methods="GET|POST")
+     */
+    public function newLost(Request $request): Response
+    {
+        $traobject = new Traobject();
+        $lost=$this->getDoctrine()->getRepository(State::class)->findOneBy(['label'=>State::LOST]);
+        $traobject->setState($lost);
+        $form = $this->createForm(TraobjectType::class, $traobject);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $traobject->setUser($this->getUser());
+
+            $em->persist($traobject);
+            $em->flush();
+
+            return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render('traobject/newlost.html.twig', [
+            'traobject' => $traobject,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/newfound", name="traobject_newfound", methods="GET|POST")
+     */
+    public function newFound(Request $request): Response
+    {
+        $traobject = new Traobject();
+        $found=$this->getDoctrine()->getRepository(State::class)->findOneBy(['label'=>State::FIND]);
+        $traobject->setState($found);
+        $form = $this->createForm(TraobjectType::class, $traobject);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $traobject->setUser($this->getUser());
+
+            $em->persist($traobject);
+            $em->flush();
+
+            return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render('traobject/newfound.html.twig', [
+            'traobject' => $traobject,
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+    /**
      * @Route("/{id}", name="traobject_show", methods="GET")
      */
     public function show(Traobject $traobject): Response

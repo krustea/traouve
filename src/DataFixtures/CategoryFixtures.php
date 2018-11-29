@@ -49,7 +49,7 @@ class CategoryFixtures extends Fixture
         $vetements = new Category();
         $vetements->setLabel('Vétements');
         $vetements->setColor('orange');
-        $vetements->setIcon('fa-tshirt');
+        $vetements->setIcon('fa-shopping-cart');
         $manager->persist($vetements);
         $this->addReference('category-6', $vetements);
 
