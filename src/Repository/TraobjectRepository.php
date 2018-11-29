@@ -20,6 +20,8 @@ class TraobjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Traobject::class);
     }
 
+    // fonction pour trier les objets par état
+
     public function findByState(State $state, int $limit = null)
     {
         $qb = $this->createQueryBuilder('t');

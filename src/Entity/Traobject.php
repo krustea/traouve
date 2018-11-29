@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -25,9 +26,15 @@ class Traobject
      */
     private $id;
 
+    // limitation du nombre de caractere dans le titre.
+
     /**
      * @var string
-     *
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters")
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
     private $title;
